@@ -1,0 +1,19 @@
+{
+  "name": "blackys-helper",
+  "version": "0.0.1",
+  "description": "Blackys Helper discord bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlackV1ruZ/Blackys-Helper.git"
+  },
+  "author": "https://github.com/BlackV1ruZ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BlackV1ruZ/Blackys-Helper/issues"
+  },
+  "homepage": "https://github.com/BlackV1ruZ/Blackys-Helper#readme"
+}
