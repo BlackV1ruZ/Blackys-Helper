@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/BlackV1ruZ/Blackys-Helper/issues"
   },
-  "homepage": "https://github.com/BlackV1ruZ/Blackys-Helper#readme"
+  "homepage": "https://github.com/BlackV1ruZ/Blackys-Helper#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }
