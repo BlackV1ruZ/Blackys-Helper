@@ -23,7 +23,9 @@ function respondToDM(message){
 
 function isCommand(message){
   return config.discord.channel_ids.includes(message.channel.id) 
-      && message.content.startsWith(config.prefix);
+      && message.content.startsWith(config.prefix)
+      && !config.ignoredCommands.includes(message.content.substring(config.prefix.length));
+      
 }
 
 function respondToCommand(message){

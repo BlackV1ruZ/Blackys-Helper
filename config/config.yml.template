@@ -11,3 +11,5 @@ minecraft:
     domain:
     user:
     password:
+ignoredCommands:
+  -
