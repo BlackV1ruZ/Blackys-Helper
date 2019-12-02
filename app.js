@@ -35,7 +35,7 @@ function respondToCommand(message){
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online and kicking!`);
   bot.user.setActivity(config.messages.activity.message, 
-    {type: config.messages.activity.typoe});
+    {type: config.messages.activity.type});
   mapChannels();
 });
 
