@@ -1,0 +1,14 @@
+responses:
+  "map":
+    description: "Dynmap URL and credentials"
+    responses:
+      - ${minecraft.map.url}
+  "ip":
+    description: "Minecraft server IP, Access is only available for whitelisted players"
+    responses:
+      - ${minecraft.server_ip}
+  "joke":
+    description: "tells a joke?"
+    responses:
+      - "can't tell this one, its waaaaaay too funny"
+      - "OH NOOOO ALOONSOOOOOOOOOOOOO"

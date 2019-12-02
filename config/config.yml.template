@@ -1,4 +1,13 @@
 discord:
-  client-id:
-  bot-token:
-  channel-ids:
+  client_id:
+  bot_token:
+  channel_ids:
+    -
+prefix:
+minecraft:
+  server_ip:
+  map:
+    protocol:
+    domain:
+    user:
+    password:
