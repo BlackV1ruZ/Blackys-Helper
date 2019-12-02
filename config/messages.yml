@@ -1,0 +1,7 @@
+activity:
+  message: "with itself"
+  type: "PLAYING"
+unkown_command: "Soon..."
+dm_prefix: >
+  I only respond in public channels :/ but thanks for the attempt to flirt
+  To see the available commands write !help in one of the following channels:

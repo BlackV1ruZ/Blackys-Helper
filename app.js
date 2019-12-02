@@ -18,9 +18,7 @@ function respondToDM(message){
   channels.forEach(t=> {
     channellist+=t.name+"\n";
   });
-  message.channel.send("I only respond in public channels :/ but thanks for the attempt to flirt\n"
-    + "To see the available commands write !help in one of the following channels:\n" 
-    + channellist);
+  message.channel.send(config.messages.dm_prefix + channellist);
 }
 
 function isCommand(message){
@@ -29,12 +27,13 @@ function isCommand(message){
 }
 
 function respondToCommand(message){
-  message.channel.send("Soon...");
+  message.channel.send(config.messages.unkown_command);
 }
 
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online and kicking!`);
-  bot.user.setActivity("with itself", {type: "PLAYING"});
+  bot.user.setActivity(config.messages.activity.message, 
+    {type: config.messages.activity.typoe});
   mapChannels();
 });
 
