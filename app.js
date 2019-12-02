@@ -8,7 +8,6 @@ var channels=[]
 
 function mapChannels(){
   channels=config.discord.channel_ids.map(t => {
-    var test=bot.channels.get(t);
     return {id: t, name: bot.channels.get(t).name};
   })
 }
