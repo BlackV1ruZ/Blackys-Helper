@@ -26,7 +26,7 @@ function loadCommands(){
     else {
       if (files <= 0) {console.info("No files in ./commands/");} 
       else {
-        let commandFiles=files.filter((file) => file.split('.').pop() === "js");
+        let commandFiles=files.filter((file) => file.split('.').pop().match("(js|ts)"));
         if (commandFiles <= 0) {console.info("Only non-command files found in ./commands/");} 
         else {
           loadCommandFiles(commandFiles);
