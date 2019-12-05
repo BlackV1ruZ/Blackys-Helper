@@ -26,12 +26,15 @@ function loadCommands(){
     else {
       let commandFiles=files.filter((file) => file.split('.').pop() === "js");
       if (files <= 0) {
-        console.info("No commands found in ./commands/");
+        console.info("Only non-command files found in ./commands/");
       } else {
         loadCommandFiles(commandFiles);
       }
     }
   });
+  if (bot.commands.size <=0){
+    console.info("No commands loaded.");
+  }
 
   function loadCommandFiles(files) {
     files.forEach((commandFile) => {
