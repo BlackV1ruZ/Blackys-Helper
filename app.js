@@ -47,8 +47,9 @@ function loadCommands(){
     command.meta.handles.forEach((handle) => {
       if (handleIsRegistered(handle)) {
         console.error(`Duplicate handle: ${handle} exists in ${command.meta.id} and ${bot.commands.get(handle).meta.id}. Handle claim for ${command.meta.id} is discarded.`);
+      } else {
+        bot.commands.set(handle, command);
       }
-      bot.commands.set(handle, command);
     });
   }
 }
