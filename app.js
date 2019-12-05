@@ -7,29 +7,32 @@ const bot = new Discord.Client({disableEveryone: true});
 
 var channels=[];
 
+function init(){
+  mapChannels();
+  loadCommands();
+}
+
 function mapChannels(){
   channels=config.discord.channel_ids.map(t => {
     return {id: t, name: bot.channels.get(t).name};
   })
 }
 
-function init(){
-  mapChannels();
-  loadCommands();
-}
 
 function loadCommands(){
   bot.commands=new Discord.Collection();
   fs.readdir("./commands/", (err, files) => {
-    if (err)
-      console.error(err);
+    if (err) console.error(err);
     else {
-      let commandFiles=files.filter((file) => file.split('.').pop() === "js");
-      if (files <= 0) {
-        console.info("Only non-command files found in ./commands/");
-      } else {
-        loadCommandFiles(commandFiles);
+      if (files <= 0) {console.info("No files in ./commands/");} 
+      else {
+        let commandFiles=files.filter((file) => file.split('.').pop() === "js");
+        if (commandFiles <= 0) {console.info("Only non-command files found in ./commands/");} 
+        else {
+          loadCommandFiles(commandFiles);
+        }
       }
+      if (bot.commands.size <= 0) {console.info("No commands loaded");}
     }
   });
 
@@ -50,13 +53,8 @@ function loadCommands(){
   }
 }
 
-
-function respondToDM(message){
-  channellist ="";
-  channels.forEach(t=> {
-    channellist+=t.name+"\n";
-  });
-  message.channel.send(config.messages.dm_prefix + channellist);
+function handleIsRegistered(handle){
+  return bot.commands.has(handle);
 }
 
 function isCommand(message){
@@ -72,8 +70,12 @@ function respondToCommand(message){
   else bot.commands.get(handle).run(bot, message, handle);
 }
 
-function handleIsRegistered(handle){
-  return bot.commands.has(handle);
+function respondToDM(message){
+  channellist ="";
+  channels.forEach(t=> {
+    channellist+=t.name+"\n";
+  });
+  message.channel.send(config.messages.dm_prefix + channellist);
 }
 
 bot.on("ready", async () => {
@@ -88,10 +90,12 @@ bot.on("channelUpdate", (channel) =>{
 })
 
 bot.on("message", async message =>{
-  if(message.author.bot) return;
-  else if(message.channel.type === "dm") {respondToDM(message);}
+  if (message.author.bot) return;
+  else if (message.channel.type === "dm") {respondToDM(message);}
   else if (isCommand(message)) {respondToCommand(message);}
 })
+
+
 
 console.debug("config:");
 console.debug(util.inspect(config, false, null, true /* enable colors */));
