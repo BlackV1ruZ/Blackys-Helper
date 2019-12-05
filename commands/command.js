@@ -11,7 +11,8 @@ module.exports.meta={
     handles: ["template", "temp"],
     description: "This is a template command",
     usage: `${Config.Prefix}template should be enough information`,
-    additionalPermissions: [
+    permissions: [
+        "template",
         "template.demo",
         "template.admin"
     ]

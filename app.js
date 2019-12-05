@@ -32,9 +32,6 @@ function loadCommands(){
       }
     }
   });
-  if (bot.commands.size <=0){
-    console.info("No commands loaded.");
-  }
 
   function loadCommandFiles(files) {
     files.forEach((commandFile) => {
@@ -76,7 +73,7 @@ function respondToCommand(message){
 }
 
 function handleIsRegistered(handle){
-  return bot.commands.keyArray().find(h => h === handle);
+  return bot.commands.has(handle);
 }
 
 bot.on("ready", async () => {
