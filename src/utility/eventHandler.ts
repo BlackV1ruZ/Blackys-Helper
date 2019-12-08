@@ -6,8 +6,8 @@ import * as config from "config-yml";
 export default class EventHandler {
   constructor(
     private readonly bot: Bot
-    ) {
-      this.init();
+  ) {
+    this.init();
   }
 
   init() {
@@ -41,22 +41,25 @@ export default class EventHandler {
       case CommandParsingErrors["Handle is empty"]:
         this.respondToEmptyHandle(command);
         break;
+      case CommandParsingErrors["not an active channel"]:
+        // do nothing
+        break;
     }
   }
 
-  respondToUnregisteredHandle(command: CommandString){
+  respondToUnregisteredHandle(command: CommandString) {
     command.originalMessage.channel.send(config.messages.unkown_command);
   }
 
-  respondToDM(command: CommandString){
-    let channellist ="";
-    this.bot.active_channels.forEach(t=> {
-      channellist+=t.name+"\n";
+  respondToDM(command: CommandString) {
+    let channellist = "";
+    this.bot.active_channels.forEach(t => {
+      channellist += t.name + "\n";
     });
     command.originalMessage.channel.send(config.messages.dm_prefix + channellist);
   }
 
-  respondToEmptyHandle(command: CommandString){
+  respondToEmptyHandle(command: CommandString) {
     command.originalMessage.channel.send(config.messages.empty_handle);
   }
 }

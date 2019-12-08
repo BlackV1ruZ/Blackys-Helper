@@ -9,7 +9,7 @@ export default class CommandParser {
     this.bot = bot;
   }
 
-  parseMessage(message: Message) : CommandString{
+  parseMessage(message: Message): CommandString {
     let response: CommandString = null;
     response = this.checkSimpleAssertions(message);
     if (response) return response;
@@ -19,12 +19,12 @@ export default class CommandParser {
     response = new CommandString(message);
     response.handle = messageParts.shift();
 
-    if ((<Array<string>>config.ignoredCommands).includes(response.handle)){
+    if ((<Array<string>>config.ignoredCommands).includes(response.handle)) {
       response.err = CommandParsingErrors["Command is configured to be ignored"];
       return response;
     }
 
-    if(this.bot.commands.has(response.handle)){
+    if (this.bot.commands.has(response.handle)) {
       response.commandHander = this.bot.commands.get(response.handle);
       response.args = messageParts;
       return response;
@@ -35,7 +35,7 @@ export default class CommandParser {
   }
 
   private assertMessage(message: Message, condition: Boolean, commandParsingErrors: CommandParsingErrors): CommandString {
-    if (condition){
+    if (condition) {
       return new CommandString(message,
         null, null, null,
         commandParsingErrors);
@@ -46,17 +46,17 @@ export default class CommandParser {
 
   private simpleAssertions = [
     (message: Message): CommandString => { return this.assertMessage(message, message.author.bot, CommandParsingErrors["Author is bot"]) },
+    (message: Message): CommandString => { return this.assertMessage(message, !(<Array<string>>config.discord.channel_ids).includes(message.channel.id), CommandParsingErrors["not an active channel"]) },
     (message: Message): CommandString => { return this.assertMessage(message, !message.content.startsWith(config.prefix), CommandParsingErrors["Prefix not found"]) },
     (message: Message): CommandString => { return this.assertMessage(message, message.channel.type === "dm", CommandParsingErrors["Message is DM"]) },
-    (message: Message): CommandString => { return this.assertMessage(message, message.content.length == config.prefix.length, CommandParsingErrors["Handle is empty"]) },
-    
+    (message: Message): CommandString => { return this.assertMessage(message, message.content.length == config.prefix.length, CommandParsingErrors["Handle is empty"]) }
   ]
 
   private checkSimpleAssertions(message: Message): CommandString {
     let response: CommandString = null;
     this.simpleAssertions.some((func) => {
       response = func(message);
-      if (response){
+      if (response) {
         return true;
       } else {
         return false;
@@ -82,5 +82,6 @@ export const enum CommandParsingErrors {
   "Message is DM",
   "Handler not registered",
   "Command is configured to be ignored",
-  "Handle is empty"
+  "Handle is empty",
+  "not an active channel"
 }
