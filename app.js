@@ -5,7 +5,6 @@ const fs = require("fs");
 
 const bot = new Discord.Client({disableEveryone: true});
 
-var channels=[];
 
 function init(){
   mapChannels();
@@ -13,7 +12,7 @@ function init(){
 }
 
 function mapChannels(){
-  channels=config.discord.channel_ids.map(t => {
+  bot.active_channels=config.discord.channel_ids.map(t => {
     return {id: t, name: bot.channels.get(t).name};
   })
 }
@@ -82,7 +81,7 @@ function respondToCommand(message){
 
 function respondToDM(message){
   channellist ="";
-  channels.forEach(t=> {
+  bot.active_channels.forEach(t=> {
     channellist+=t.name+"\n";
   });
   message.channel.send(config.messages.dm_prefix + channellist);
