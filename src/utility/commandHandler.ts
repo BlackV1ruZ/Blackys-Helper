@@ -1,7 +1,7 @@
 import { Bot } from "./bot";
-import { Message } from 'discord.js';
+import { CommandString } from "./commandParser";
 export interface CommandHandler {
-  run(bot: Bot, message: Message, command: string, args?: string[]): void;
+  run(command : CommandString, bot: Bot): void;
   meta: {
     id: string;
     command: [{

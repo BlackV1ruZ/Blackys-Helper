@@ -1,11 +1,11 @@
 import { CommandHandler } from "../utility/commandHandler";
-import { Message } from "discord.js";
 import { Bot } from "../utility/bot";
 import config from "config-yml";
+import { CommandString } from "../utility/commandParser";
 
 export default class TemplateCommand implements CommandHandler {
-    run(bot: Bot, message: Message, command: string, args?: string[]): void {
-      message.channel.send("Template command, not implemented");
+    run(command: CommandString, bot : Bot): void {
+      command.originalMessage.channel.send("Template command, not implemented");
     }
     meta: CommandHandler["meta"]= {
         id: "template.typescript",

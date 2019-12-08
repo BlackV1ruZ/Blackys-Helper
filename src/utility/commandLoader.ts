@@ -20,7 +20,7 @@ export class CommandLoader{
           console.info("No files in ./commands/");
         }
         else {
-          let commandFiles = files.filter((file) => file.split('.').pop().match("(js|ts)"));
+          let commandFiles = files.filter((file) => file.endsWith(".js"));
           if (commandFiles.length <= 0) {
             console.info("No javascript or typescript files found in ./commands/");
           }

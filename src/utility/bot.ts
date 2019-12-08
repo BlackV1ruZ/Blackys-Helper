@@ -2,16 +2,22 @@ import { Client, TextChannel, Collection } from "discord.js";
 import { CommandLoader } from "./commandLoader";
 import { CommandHandler } from "./commandHandler";
 import * as config from "config-yml";
+import CommandParser, { CommandString, CommandParsingErrors } from "./commandParser";
+import EventHandler from "./eventHandler";
 
 export class Bot {
   public client: Client;
   public active_channels: Array<channelMapping>;
   public commands : Collection<string, CommandHandler>;
-  private commandLoader : CommandLoader;
+  public readonly commandLoader : CommandLoader;
+  public readonly commandParser : CommandParser;
+  public readonly eventHandler : EventHandler;
 
   constructor(){
     this.client = new Client({ disableEveryone: true });
     this.commandLoader = new CommandLoader(this);
+    this.commandParser = new CommandParser(this);
+    this.eventHandler = new EventHandler(this);
     this.init();
   }
 
@@ -26,8 +32,14 @@ export class Bot {
     })
   }
 
-  public handleIsRegistered(handle) : Boolean{
+  public handleIsRegistered(handle: string) : Boolean{
     return this.commands.has(handle);
+  }
+
+  public runCommandString(command: CommandString){
+    if (command.err) throw new Error("Commands with parsing errors cannot be run");
+    if (!command.commandHander) throw new Error("Commands without Handler cannot be run");
+    command.commandHander.run(command, this);
   }
 
 
@@ -36,7 +48,7 @@ export class Bot {
     this.client.on("channelUpdate", () => this.mapChannels);
     this.client.on("channelCreate", () => this.mapChannels);
     this.client.on("channelDelete", () => this.mapChannels);
-    this.client.on("resume", () => this.mapChannels);
+    this.client.on("resume", () =>  this.mapChannels);
     this.client.on("ready", async () => {
       console.log(`${this.client.user.username} is online and kicking!`);
       this.client.user.setActivity(config.messages.activity.message, 
@@ -44,6 +56,7 @@ export class Bot {
       this.mapChannels();
     });
   }
+
 
   public login() {
     this.client.login(config.discord.bot_token);
