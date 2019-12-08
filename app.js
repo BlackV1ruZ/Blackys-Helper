@@ -1,22 +1,13 @@
+const { bot } = require("./utility/bot");
+
 const Discord = require('discord.js');
 const config = require('config-yml');
 const util = require ('util');
 const fs = require("fs");
 
-const bot = new Discord.Client({disableEveryone: true});
-
-
 function init(){
-  mapChannels();
   loadCommands();
 }
-
-function mapChannels(){
-  bot.active_channels=config.discord.channel_ids.map(t => {
-    return {id: t, name: bot.channels.get(t).name};
-  })
-}
-
 
 function loadCommands(){
   bot.commands=new Discord.Collection();
@@ -87,24 +78,13 @@ function respondToDM(message){
   message.channel.send(config.messages.dm_prefix + channellist);
 }
 
-bot.on("ready", async () => {
-  console.log(`${bot.user.username} is online and kicking!`);
-  bot.user.setActivity(config.messages.activity.message, 
-    {type: config.messages.activity.type});
-  init();
-});
-
-bot.on("channelUpdate", (channel) =>{
-  mapChannels();
-})
+bot.on("ready", init);
 
 bot.on("message", async message =>{
   if (message.author.bot) return;
   else if (message.channel.type === "dm") {respondToDM(message);}
   else if (isCommand(message)) {respondToCommand(message);}
 })
-
-
 
 console.debug("config:");
 console.debug(util.inspect(config, false, null, true /* enable colors */));
