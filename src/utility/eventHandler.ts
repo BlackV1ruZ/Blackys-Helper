@@ -38,6 +38,9 @@ export default class EventHandler {
       case CommandParsingErrors["Author is bot"]:
         // do nothing
         break;
+      case CommandParsingErrors["Handle is empty"]:
+        this.respondToEmptyHandle(command);
+        break;
     }
   }
 
@@ -51,5 +54,9 @@ export default class EventHandler {
       channellist+=t.name+"\n";
     });
     command.originalMessage.channel.send(config.messages.dm_prefix + channellist);
+  }
+
+  respondToEmptyHandle(command: CommandString){
+    command.originalMessage.channel.send(config.messages.empty_handle);
   }
 }
