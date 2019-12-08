@@ -19,8 +19,7 @@
   "dependencies": {
     "config-yml": "^0.10.3",
     "discord.js": "^11.5.1",
-    "typescript": "^3.7.3",
-    "typescript-require": "^0.2.10"
+    "typescript": "^3.7.3"
   },
   "devDependencies": {
     "@types/node": "^12.12.14"

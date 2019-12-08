@@ -1,4 +1,3 @@
-require('typescript-require');
 import { Bot, channelMapping } from "./utility/bot";
 import * as Discord from "discord.js" ;
 import * as config from "config-yml";
